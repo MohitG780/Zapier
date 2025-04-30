@@ -28,6 +28,15 @@ const pendingRows=await client.zapRunOutbox.findMany({
       
      })
 
+
+     await client.zapRunOutbox.deleteMany({
+        where:{
+            id:{in:pendingRows.map(x=>x.id)
+
+            }
+
+        }
+     })
     
 }
 }

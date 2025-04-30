@@ -60,7 +60,7 @@ model ZapRun{
   metadata      Json  @default("{}")
   zap           Zap @relation(fields: [zapId],references: [id])
   zapRunOutbox  ZapRunOutbox?
-   
+  sortinOrder Int @default(0) 
 }
 
 model ZapRunOutbox{
