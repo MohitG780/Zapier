@@ -21,6 +21,7 @@ app.post("/hooks/catch/:userId/:zapId", (req, res) => __awaiter(void 0, void 0, 
     const userId = req.params.userId;
     const zapId = req.params.zapId;
     const body = req.body;
+    console.log("Received webhook:", { userId, zapId, body });
     yield client.$transaction((tx) => __awaiter(void 0, void 0, void 0, function* () {
         const run = yield tx.zapRun.create({
             data: {

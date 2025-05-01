@@ -26,6 +26,7 @@ function main() {
                 where: {},
                 take: 10
             });
+            console.log(pendingRows);
             producer.send({
                 topic: TOPIC_NAME,
                 messages: pendingRows.map(r => {

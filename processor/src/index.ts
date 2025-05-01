@@ -15,6 +15,8 @@ const pendingRows=await client.zapRunOutbox.findMany({
     where:{},
     take:10
 }) 
+console.log(pendingRows);
+
 
    producer.send({
     topic:TOPIC_NAME,

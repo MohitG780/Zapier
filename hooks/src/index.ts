@@ -8,6 +8,7 @@ const client=new PrismaClient();
 const userId=req.params.userId;
 const zapId=req.params.zapId;
 const body=req.body;
+console.log("Received webhook:", { userId, zapId, body });
 await client.$transaction(async tx=>{
     const run=await tx.zapRun.create({
         
