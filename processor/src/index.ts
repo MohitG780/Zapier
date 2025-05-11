@@ -39,7 +39,7 @@ console.log(pendingRows);
 
         }
      })
-    
+    await new Promise(r=>setTimeout(r,3000));
 }
 }
 main();

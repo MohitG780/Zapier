@@ -3,7 +3,7 @@ import { Kafka } from "kafkajs";
 const TOPIC_NAME="quickstart-events"
 
 const kafka = new Kafka({
-    clientId: 'outbox-processor',
+    clientId: 'outbox-processor-2',
     brokers: ['localhost:9092']
   })
  
@@ -11,7 +11,7 @@ const kafka = new Kafka({
  async function main(){
    
   const consumer=kafka.consumer({  
-      groupId:'main-worker' 
+      groupId:'main-worker-2' 
 
    });
    await consumer.connect();
@@ -25,6 +25,7 @@ const kafka = new Kafka({
         value: message.value?.toString(),
       })
       await new Promise(r=>setTimeout(r,5000)); 
+      const zapId= message.value?.toString();
        console.log("processing done");
       await consumer.commitOffsets([{
         topic:TOPIC_NAME,
