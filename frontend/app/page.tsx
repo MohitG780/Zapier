@@ -30,14 +30,12 @@ export default function Home() {
             </Link>
           </nav>
           <div className="flex items-center space-x-4">
-            <Link href="#" className=" font-bold text-medium hidden text-sm text-gray-600 hover:text-gray-900 md:block">
-              Sign in
-            </Link>
+            
             <Link
-              href="#"
+              href="/login"
               className="rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 px-4 py-2 text-sm font-medium text-white hover:opacity-90"
             >
-              Get Started
+              Login
             </Link>
           </div>
         </div>
@@ -60,17 +58,12 @@ export default function Home() {
 
         <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
           <Link
-            href="#"
+            href="/signup"
             className=" text-medium flex h-14 items-center justify-center rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 px-8 font-medium text-white transition-all hover:opacity-90"
           >
             Start free with email
           </Link>
-          <Link
-            href="#"
-            className="text-medium flex h-14 items-center justify-center rounded-lg border border-gray-200 bg-white px-8 font-medium text-gray-800 transition-all hover:bg-gray-50"
-          >
-            Start free with Google <ArrowRight className="ml-2 h-4 w-4" />
-          </Link>
+          
         </div>
       </section>
 

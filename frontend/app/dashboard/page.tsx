@@ -103,7 +103,9 @@ export default function ZapierDashboard() {
       <main className="max-w-6xl mx-auto px-6 py-8">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-2xl font-bold">My Zaps</h2>
-          <button className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white px-6 py-2 rounded-md transition-all shadow-md hover:shadow-lg flex items-center">
+          <button   onClick={() => {
+                        router.push("/zap/create") //+z.id
+                      }} className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white px-6 py-2 rounded-md transition-all shadow-md hover:shadow-lg flex items-center">
             <span className="mr-1">+</span> Create
           </button>
         </div>
