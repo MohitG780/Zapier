@@ -1,49 +1,73 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useEffect, useState, useRef } from "react"
 
 interface AnimatedCounterProps {
   value: number
   suffix?: string
+  className?: string
 }
 
-export default function AnimatedCounter({ value, suffix = "" }: AnimatedCounterProps) {
+export default function AnimatedCounter({ value, suffix = "", className = "" }: AnimatedCounterProps) {
   const [count, setCount] = useState(0)
-  const countRef = useRef(0)
-  const frameRef = useRef(0)
+  const countRef = useRef(null)
+  const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
-    const duration = 2000 // 2 seconds
-    const startTime = Date.now()
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+        }
+      },
+      { threshold: 0.1 },
+    )
 
-    const animate = () => {
-      const now = Date.now()
-      const progress = Math.min((now - startTime) / duration, 1)
-      const currentCount = Math.floor(progress * value)
-
-      if (countRef.current !== currentCount) {
-        countRef.current = currentCount
-        setCount(currentCount)
-      }
-
-      if (progress < 1) {
-        frameRef.current = requestAnimationFrame(animate)
-      } else {
-        setCount(value)
-      }
+    if (countRef.current) {
+      observer.observe(countRef.current)
     }
 
-    frameRef.current = requestAnimationFrame(animate)
+    return () => {
+      if (countRef.current) {
+        observer.unobserve(countRef.current)
+      }
+    }
+  }, [])
 
-    return () => cancelAnimationFrame(frameRef.current)
-  }, [value])
+  useEffect(() => {
+    if (!isVisible) return
 
-  // Format the number with commas
-  const formattedCount = count.toLocaleString()
+    let start = 0
+    const end = value
+    const duration = 2000
+    const increment = end / (duration / 16)
+
+    const timer = setInterval(() => {
+      start += increment
+      setCount(Math.floor(start))
+
+      if (start >= end) {
+        clearInterval(timer)
+        setCount(end)
+      }
+    }, 16)
+
+    return () => clearInterval(timer)
+  }, [value, isVisible])
+
+  const formatNumber = (num: number) => {
+    if (num >= 1000000) {
+      return (num / 1000000).toFixed(1) + "M"
+    }
+    if (num >= 1000) {
+      return (num / 1000).toFixed(0) + "K"
+    }
+    return num.toString()
+  }
 
   return (
-    <div className="text-3xl font-bold text-white md:text-4xl">
-      {formattedCount}
+    <div ref={countRef} className={`text-3xl font-bold ${className}`}>
+      {formatNumber(count)}
       {suffix}
     </div>
   )

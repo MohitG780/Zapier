@@ -133,7 +133,7 @@ export default function ZapierDashboard() {
                   <td className="px-6 py-4">
                     <button
                       onClick={() => {
-                        router.push("/zap/create" + z.id)
+                        router.push("/zap/create") //+z.id
                       }}
                       className={`px-4 py-2 rounded-md text-sm transition-colors ${
                         theme === "dark"

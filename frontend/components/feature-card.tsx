@@ -1,37 +1,17 @@
-"use client"
-
-import { useState } from "react"
-import type React from "react"
-import { cn } from "@/lib/utils"
+import type { ReactNode } from "react"
 
 interface FeatureCardProps {
-  icon: React.ReactNode
+  icon: ReactNode
   title: string
   description: string
 }
 
 export default function FeatureCard({ icon, title, description }: FeatureCardProps) {
-  const [isHovered, setIsHovered] = useState(false)
-
   return (
-    <div
-      className={cn(
-        "group rounded-xl border border-slate-800 bg-slate-900/50 p-6 transition-all duration-300",
-        isHovered && "border-orange-500/50 bg-slate-900 shadow-lg shadow-orange-500/10",
-      )}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <div
-        className={cn(
-          "mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-slate-800 text-orange-500 transition-all duration-300",
-          isHovered && "bg-orange-500 text-white",
-        )}
-      >
-        {icon}
-      </div>
-      <h3 className="mb-2 text-lg font-semibold text-white">{title}</h3>
-      <p className="text-slate-400">{description}</p>
+    <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm transition-all hover:shadow-md">
+      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-50 text-blue-600">{icon}</div>
+      <h3 className="mb-2 text-xl font-medium text-gray-800">{title}</h3>
+      <p className="text-gray-600">{description}</p>
     </div>
   )
 }

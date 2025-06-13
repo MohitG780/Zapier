@@ -1,58 +1,58 @@
 "use client"
 
 import { useState } from "react"
-import { ChevronDown, ChevronUp } from "lucide-react"
 
-const faqs = [
+const faqData = [
   {
-    question: "How does the platform work?",
+    question: "How does HookWorks integrate with my existing tools?",
     answer:
-      "Our platform allows you to connect different apps and services through a visual interface. You can create workflows that automate tasks between these services without writing any code. Simply select your trigger, add actions, and deploy your workflow in minutes.",
+      "HookWorks connects seamlessly with over 100 popular tools and services through our pre-built integrations. For custom tools, our open API allows for easy connectivity with any system.",
   },
   {
-    question: "Do I need technical skills to use the platform?",
+    question: "Is there a free plan available?",
     answer:
-      "No technical skills are required! Our visual workflow builder is designed for anyone to use. You can create complex automations through our drag-and-drop interface without writing a single line of code.",
+      "Yes! We offer a generous free tier that includes up to 1,000 workflow executions per month, access to core integrations, and basic workflow templates.",
   },
   {
-    question: "Which apps and services can I integrate?",
+    question: "How secure is my data with HookWorks?",
     answer:
-      "We support 100+ integrations including popular services like Slack, Google Workspace, Microsoft 365, Salesforce, HubSpot, Jira, GitHub, and many more. We're constantly adding new integrations based on user requests.",
+      "Security is our top priority. We're SOC 2 compliant, implement end-to-end encryption, and never store sensitive data unless explicitly configured to do so.",
   },
   {
-    question: "Is there a limit to how many workflows I can create?",
+    question: "Can I build custom workflows?",
     answer:
-      "Free accounts can create up to 5 workflows. Pro accounts have unlimited workflows with higher execution limits. Enterprise accounts have unlimited everything with dedicated support.",
-  },
-  {
-    question: "How secure is my data?",
-    answer:
-      "Security is our top priority. We're SOC 2 compliant, use end-to-end encryption for all data transfers, and never store your credentials in plain text. We also offer enterprise-grade security features like SSO and SAML.",
+      "Our visual workflow builder makes it easy to create custom workflows without coding. For advanced users, our scripting capabilities allow for complex logic and transformations.",
   },
 ]
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
 
-  const toggleFaq = (index: number) => {
+  const toggleFAQ = (index: number) => {
     setOpenIndex(openIndex === index ? null : index)
   }
 
   return (
-    <div className="mx-auto max-w-3xl divide-y divide-slate-800">
-      {faqs.map((faq, index) => (
+    <div className="mx-auto max-w-3xl divide-y divide-gray-200">
+      {faqData.map((faq, index) => (
         <div key={index} className="py-6">
-          <button className="flex w-full items-center justify-between text-left" onClick={() => toggleFaq(index)}>
-            <h3 className="text-lg font-medium text-white">{faq.question}</h3>
-            {openIndex === index ? (
-              <ChevronUp className="h-5 w-5 text-slate-400" />
-            ) : (
-              <ChevronDown className="h-5 w-5 text-slate-400" />
-            )}
+          <button onClick={() => toggleFAQ(index)} className="flex w-full items-start justify-between text-left">
+            <span className="text-lg font-medium text-gray-800">{faq.question}</span>
+            <span className="ml-6 flex h-7 items-center">
+              {openIndex === index ? (
+                <svg className="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
+                </svg>
+              ) : (
+                <svg className="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                </svg>
+              )}
+            </span>
           </button>
           {openIndex === index && (
-            <div className="mt-3 animate-fadeIn">
-              <p className="text-slate-400">{faq.answer}</p>
+            <div className="mt-2 pr-12">
+              <p className="text-gray-600">{faq.answer}</p>
             </div>
           )}
         </div>
