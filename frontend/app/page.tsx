@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ArrowRight, LinkIcon, UserCircle, CheckCircle, Mail, Layers, Database, Lock } from "lucide-react"
+import {  LinkIcon, UserCircle, CheckCircle, Mail, Layers, Database, Lock } from "lucide-react"
 import WorkflowStep from "@/components/workflow-step"
 import FeatureCard from "@/components/feature-card"
 import FAQ from "@/components/faq"

@@ -5,11 +5,12 @@ import { ChevronRight } from "lucide-react"
 interface ZapCellProps {
   name: string
   index: number
+  onClick: () => void;
 }
 
-export function ZapCell({ name, index }: ZapCellProps) {
+export function ZapCell({ name, index, onClick }: ZapCellProps) {
   return (
-    <div className="relative group">
+    <div onClick={onClick} className="relative group cursor-pointer">
       <div className="flex items-center gap-3 px-4 py-3 bg-white rounded-lg shadow-sm border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all w-64">
         <div className="flex items-center justify-center w-6 h-6 rounded-full bg-slate-100 text-slate-600 text-xs font-medium">
           {index}

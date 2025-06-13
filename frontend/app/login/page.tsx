@@ -6,7 +6,7 @@ import Link from "next/link"
 import { useState } from "react"
 import { BACKEND_URL } from "../config"
 import { useRouter } from "next/navigation"
-import axios from "axios"
+import axios, { AxiosError } from "axios"
 
 export default function Login() {
   const router = useRouter()
@@ -34,15 +34,20 @@ export default function Login() {
 
       localStorage.setItem("token", res.data.token)
       router.push("/dashboard")
-    } 
-    catch (err: any) {
-      if (err.response?.status === 403) {
-        setErrorMessage("Invalid email or password.")
-      } else {
-        setErrorMessage("Something went wrong. Please try again.")
-      }
-      console.error("Login error:", err)
-    }
+    }catch (err: unknown) {
+  const error = err as AxiosError
+
+  if (error.response?.status === 403) {
+    setErrorMessage("Invalid email or password.")
+  } else {
+    setErrorMessage("Something went wrong. Please try again.")
+  }
+
+  console.error("Login error:", error)
+}
+
+   
+    
   }
 
   return (
