@@ -2,8 +2,10 @@
 
 import { BACKEND_URL } from "@/app/config";
 import { PrimaryButton } from "@/components/Buttons/PrimaryButton"
+import { SecondaryButton } from "@/components/Buttons/SecondaryButton";
 import { ZapCell } from "@/components/ZapCell"
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react"
 function useAvailableActionsAndTriggers(){
     const [availableActions,setAvailableActions]=useState([]);
@@ -19,6 +21,7 @@ function useAvailableActionsAndTriggers(){
 
 }
 export default function CreateZap() {
+  const router=useRouter();
     const {availableActions,availableTriggers}=useAvailableActionsAndTriggers();
 
   const [selectedTrigger, setSelectedTrigger] = useState<{ name:string; id: string; }>()
@@ -27,7 +30,40 @@ export default function CreateZap() {
   )
 const [selectedModalIndex,setselectedModalIndex]=useState<null|number>(null);
   return (
+    
     <div className="w-full min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 flex flex-col items-center py-12 px-4">
+      <div className="w-full flex justify-end ">
+  <SecondaryButton
+    onClick={async () => {
+   
+      if (!selectedTrigger?.id) {
+        return;
+      }
+      try {
+        await axios.post(`${BACKEND_URL}/api/v1/zap`, {
+          availableTriggerId: selectedTrigger.id,
+          triggerMetadata: {},
+          actions: selectedActions.map(a=>({
+            availableActionId:a.availableActionId,
+            actionMetadata:{}
+          })) 
+        },{
+          headers:{
+            Authorization:localStorage.getItem("token")
+          }
+        });
+        // Optional: success handling here
+      } catch (err) {
+        console.error("Failed to publish zap:", err);
+        // Optional: show error to user
+      }
+      router.push("/dashboard");
+    }}
+  >
+    Publish
+  </SecondaryButton>
+</div>
+
       <div className="max-w-2xl w-full">
         <h1 className="text-2xl font-bold text-slate-800 mb-8 text-center">Create Automation</h1>
 
@@ -38,11 +74,6 @@ const [selectedModalIndex,setselectedModalIndex]=useState<null|number>(null);
             setselectedModalIndex(1);
           }} name={selectedTrigger?.name || "Select a Trigger"} index={1} />
           </div>
-
-          {/* Connecting lines */}
-          {selectedActions.length > 0 && (
-            <div className="absolute top-[4.5rem] bottom-16 w-0.5 bg-slate-200 -z-10"></div>
-          )}
 
           {/* Action Cells */}
           <div className="w-full space-y-8 mb-8" >

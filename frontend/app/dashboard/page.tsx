@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { Moon, Sun } from "lucide-react"
 import axios from "axios"
-import { BACKEND_URL } from "../config"
+import { BACKEND_URL, HOOKS_URL } from "../config"
 import { useRouter } from "next/navigation"
 
 interface Zap {
@@ -18,6 +18,7 @@ interface Zap {
     type: {
       id: string
       name: string
+      image:string
     }
   }[]
   trigger: {
@@ -117,7 +118,8 @@ export default function ZapierDashboard() {
               <tr className="text-left">
                 <th className="px-6 py-4 font-medium">Name</th>
                 <th className="px-6 py-4 font-medium">Id</th>
-                <th className="px-6 py-4 font-medium">Last Edit</th>
+                   <th className="px-6 py-4 font-medium">WebHook URL</th>
+                <th className="px-6 py-4 font-medium">Created At</th>
                 <th className="px-6 py-4 font-medium">Go</th>
               </tr>
             </thead>
@@ -129,9 +131,16 @@ export default function ZapierDashboard() {
                     theme === "dark" ? "border-gray-700 hover:bg-gray-700" : "border-gray-100 hover:bg-gray-50"
                   } transition-colors`}
                 >
-                  <td className="px-6 py-4">{z.trigger?.type?.name} {z.actions.map(x=>x.type.name+" ")}</td>
+                   <td className="px-6 py-4 flex items-center gap-2">
+                    <img src={z.trigger?.type?.image} width={30} alt="Trigger" />
+                     {z.actions.map((x, idx) => (
+                      <img key={idx} src={x.type.image} width={30} alt="Action" />
+                        ))}
+                      </td>
                   <td className="px-6 py-4">{z.id}</td>
+                    <td className={`px-6 py-4 ${theme === "dark" ? "text-gray-400" : "text-gray-500"}`}>{`${HOOKS_URL}/hooks/catch/1/${z.id}`}</td>
                   <td className={`px-6 py-4 ${theme === "dark" ? "text-gray-400" : "text-gray-500"}`}>May 13, 2025</td>
+                                  
                   <td className="px-6 py-4">
                     <button
                       onClick={() => {
