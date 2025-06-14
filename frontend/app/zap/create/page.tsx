@@ -7,10 +7,10 @@ import axios from "axios";
 import { useEffect, useState } from "react"
 function useAvailableActionsAndTriggers(){
     const [availableActions,setAvailableActions]=useState([]);
-        const [availableTriggers,setAvaailableTriggers]=useState([]);
+        const [availableTriggers,setAvailableTriggers]=useState([]);
         useEffect(()=>{
-        axios.get(`${BACKEND_URL}/api/v1/trigger/available`).then(x=>setAvaailableTriggers(x.data.availableTriggers))
-        axios.get(`${BACKEND_URL}/api/v1/action/available`).then(x=>setAvaailableTriggers(x.data.availableActions))
+        axios.get(`${BACKEND_URL}/api/v1/trigger/available`).then(x=>setAvailableActions(x.data.availableTriggers))
+        axios.get(`${BACKEND_URL}/api/v1/action/available`).then(x=>setAvailableTriggers(x.data.availableActions))
         },[])
         return {
             availableActions,
@@ -19,6 +19,8 @@ function useAvailableActionsAndTriggers(){
 
 }
 export default function CreateZap() {
+    const {availableActions,availableTriggers}=useAvailableActionsAndTriggers();
+
   const [selectedTrigger, setSelectedTrigger] = useState<{ name:string; id: string; }>()
   const [selectedActions, setSelectedActions] = useState<{ index:number; availableActionId: string; availableActionName: string }[]>(
     [],
@@ -75,7 +77,7 @@ const [selectedModalIndex,setselectedModalIndex]=useState<null|number>(null);
        
       </div>
 
-      {selectedModalIndex && <Modal onSelect={(props:null| {name:string,id:string;})=>{
+      {selectedModalIndex && <Modal availableItems={selectedModalIndex===1?availableTriggers:availableActions} onSelect={(props:null| {name:string,id:string;})=>{
         if(props===null){
     setselectedModalIndex(null);
     return;
@@ -104,9 +106,10 @@ const [selectedModalIndex,setselectedModalIndex]=useState<null|number>(null);
   function Modal({
         index,
         onSelect,
+       availableItems
 }: {
       index: number;
-          onSelect: (props: null | { name: string; id: string }) => void;
+          onSelect: (props: null | { name: string; id: string }) => void,availableItems:{id:string,name:string,image:string;}[]
 }) {
 
     return <div>
@@ -133,10 +136,21 @@ const [selectedModalIndex,setselectedModalIndex]=useState<null|number>(null);
                     <span className="sr-only">Close modal</span>
                 </button>
             </div>
+<div className="p-4 md:p-5 space-y-4 text-black">
+  {availableItems.map(({ id, name, image }) => (
+    <div
+      key={id}
+      onClick={() => {
+        onSelect({ id, name });
+      }}
+      className="flex items-center border p-4 cursor-pointer hover:bg-slate-100 rounded-lg"
+    >
+      <img src={image} width={30} height={30} className="rounded-full" alt={name} />
+      <div className="ml-3 text-sm font-medium">{name}</div>
+    </div>
+  ))}
+</div>
 
-            <div className="p-4 md:p-5 space-y-4 text-black">
-               mohit
-            </div>
 
            
         </div>
