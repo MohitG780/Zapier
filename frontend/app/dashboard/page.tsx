@@ -132,9 +132,9 @@ export default function ZapierDashboard() {
                   } transition-colors`}
                 >
                    <td className="px-6 py-4 flex items-center gap-2">
-                    <img src={z.trigger?.type?.image} width={30} alt="Trigger" />
+                    <img src={z.trigger?.type?.image} width={20} alt="Trigger" />
                      {z.actions.map((x, idx) => (
-                      <img key={idx} src={x.type.image} width={30} alt="Action" />
+                      <img key={idx} src={x.type.image} width={20} alt="Action" />
                         ))}
                       </td>
                   <td className="px-6 py-4">{z.id}</td>

@@ -26,7 +26,8 @@ router.post("/",authMiddleware,async(req,res)=>{
                         //@ts-ignore
                     create:parsedData.data.actions.map((x,index)=>({
                   actionId:x.availableActionId,
-                  sortinOrder:index
+                  sortinOrder:index,
+                             metadata:x.actionMetadata 
                     }))
                 }
             }
@@ -37,6 +38,7 @@ router.post("/",authMiddleware,async(req,res)=>{
                 //@ts-ignore
                 triggerId : parsedData.data.availableTriggerId,
              zapId:zap.id
+  
              
             }
         });

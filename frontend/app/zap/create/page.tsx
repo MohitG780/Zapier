@@ -1,4 +1,5 @@
 "use client"
+import { Input } from "@/components/Input";
 
 import { BACKEND_URL } from "@/app/config";
 import { PrimaryButton } from "@/components/Buttons/PrimaryButton"
@@ -25,7 +26,7 @@ export default function CreateZap() {
     const {availableActions,availableTriggers}=useAvailableActionsAndTriggers();
 
   const [selectedTrigger, setSelectedTrigger] = useState<{ name:string; id: string; }>()
-  const [selectedActions, setSelectedActions] = useState<{ index:number; availableActionId: string; availableActionName: string }[]>(
+  const [selectedActions, setSelectedActions] = useState<{ index:number; availableActionId: string; availableActionName: string;metadata:any; }[]>(
     [],
   )
 const [selectedModalIndex,setselectedModalIndex]=useState<null|number>(null);
@@ -45,7 +46,7 @@ const [selectedModalIndex,setselectedModalIndex]=useState<null|number>(null);
           triggerMetadata: {},
           actions: selectedActions.map(a=>({
             availableActionId:a.availableActionId,
-            actionMetadata:{}
+            actionMetadata:a.metadata
           })) 
         },{
           headers:{
@@ -96,6 +97,8 @@ const [selectedModalIndex,setselectedModalIndex]=useState<null|number>(null);
                     index:a.length+2,
                     availableActionId: "",
                     availableActionName: "",
+                    metadata:{}
+
                   },
                 ])
               }}
@@ -108,7 +111,7 @@ const [selectedModalIndex,setselectedModalIndex]=useState<null|number>(null);
        
       </div>
 
-      {selectedModalIndex && <Modal availableItems={selectedModalIndex===1?availableTriggers:availableActions} onSelect={(props:null| {name:string,id:string;})=>{
+      {selectedModalIndex && <Modal availableItems={selectedModalIndex===1?availableTriggers:availableActions} onSelect={(props:null| {name:string,id:string;metadata:any;})=>{
         if(props===null){
     setselectedModalIndex(null);
     return;
@@ -123,7 +126,9 @@ const [selectedModalIndex,setselectedModalIndex]=useState<null|number>(null);
         newActions[selectedModalIndex-2]={
               index:selectedModalIndex,
               availableActionId:props.id,
-              availableActionName:props.name
+              availableActionName:props.name,
+              metadata:props.metadata
+
         }
         return newActions;
        }
@@ -140,8 +145,15 @@ const [selectedModalIndex,setselectedModalIndex]=useState<null|number>(null);
        availableItems
 }: {
       index: number;
-          onSelect: (props: null | { name: string; id: string }) => void,availableItems:{id:string,name:string,image:string;}[]
+           onSelect: (props: null | { name: string; id: string; metadata: any }) => void;
+           availableItems:{id:string,name:string,image:string;}[]
 }) {
+  const [step,setStep]=useState(0);
+  const[selectedAction,setSelectedAction]=useState<{
+    id:string;
+    name:string;
+  }>()
+   const isTrigger=index===1;
 
     return <div>
 
@@ -167,19 +179,43 @@ const [selectedModalIndex,setselectedModalIndex]=useState<null|number>(null);
                     <span className="sr-only">Close modal</span>
                 </button>
             </div>
-<div className="p-4 md:p-5 space-y-4 text-black">
-  {availableItems.map(({ id, name, image }) => (
+            <div className="p-4 md:p-5 space-y-4 text-black">
+           
+            {(step===1&&selectedAction?.id==="email")&&<EmailSelector setMetadata={(metadata)=>{
+              onSelect({
+              ...selectedAction,metadata
+              })
+            }}/>}
+
+{(step===1&&selectedAction?.id==="send-sol")&& <SolanaSelector setMetadata={(metadata)=>{
+onSelect({
+              ...selectedAction,metadata
+              })
+}}/>
+
+}
+
+{step===0&&<div>{availableItems.map(({ id, name, image }) => (
     <div
       key={id}
       onClick={() => {
-        onSelect({ id, name });
+        if(isTrigger){
+          onSelect({ id, name });
+        }else{
+          setStep(s=>s+1);
+          setSelectedAction({
+            id,name,
+          })
+        }
+      
       }}
       className="flex items-center border p-4 cursor-pointer hover:bg-slate-100 rounded-lg"
     >
       <img src={image} width={30} height={30} className="rounded-full" alt={name} />
       <div className="ml-3 text-sm font-medium">{name}</div>
     </div>
-  ))}
+  ))}</div>}
+
 </div>
 
 
@@ -190,4 +226,42 @@ const [selectedModalIndex,setselectedModalIndex]=useState<null|number>(null);
 
     </div>
 
+}
+
+function EmailSelector({setMetadata}:{
+  setMetadata:(params: any)=>void;
+}){
+  const [email,setEmail]=useState("");
+  const [body,setBody]=useState("");
+  return <div> 
+    <Input label={"To"} type={"text"} placeholder="To" onChange={(e)=>setEmail(e.target.value)}/>
+     <Input label={"Body"} type={"text"} placeholder="Body" onChange={(e)=>setBody(e.target.value) }/>
+     <SecondaryButton onClick={() => {
+  setMetadata({
+    email,
+    body,
+  });
+}}>Submit</SecondaryButton>
+
+  </div>
+}
+
+function SolanaSelector({setMetadata}:{
+  setMetadata:(params: any)=>void;
+}){
+const [address,setAddress]=useState("");
+  const [amount,setAmount]=useState("");
+  return <div> 
+    <Input label={"To"} type={"text"} placeholder="Recipient Address" onChange={(e)=>setAddress(e.target.value)}/>
+     <Input label={"Amount"} type={"text"} placeholder="Amount" onChange={(e)=>setAmount(e.target.value) }/>
+   <SecondaryButton onClick={() => {
+  setMetadata({
+    amount,
+    address,
+  });
+}}>
+  Submit
+</SecondaryButton>
+
+  </div>
 }
