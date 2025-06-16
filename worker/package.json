@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsc -b&&node dist/index.js"
+    "dev": "tsc -b&&node dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -19,7 +19,11 @@
   },
   "homepage": "https://github.com/MohitG780/Zapier#readme",
   "dependencies": {
+    "@prisma/client": "^6.9.0",
     "kafkajs": "^2.2.4",
     "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "prisma": "^6.9.0"
   }
 }

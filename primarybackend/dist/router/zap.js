@@ -35,7 +35,8 @@ router.post("/", middleware_1.authMiddleware, (req, res) => __awaiter(void 0, vo
                     //@ts-ignore
                     create: parsedData.data.actions.map((x, index) => ({
                         actionId: x.availableActionId,
-                        sortinOrder: index
+                        sortinOrder: index,
+                        metadata: x.actionMetadata
                     }))
                 }
             }
