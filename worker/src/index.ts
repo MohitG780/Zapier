@@ -16,6 +16,8 @@ const kafka = new Kafka({
 
    });
    await consumer.connect();
+      const producer = kafka.producer();
+    await producer.connect();
   await consumer.subscribe({topic:TOPIC_NAME,fromBeginning:true})
   await consumer.run({
     autoCommit:false,
@@ -54,24 +56,40 @@ const kafka = new Kafka({
       //send a query to getback the actions associated with this zap id
       //find the available actions
 
-       const currentAction=zapRunDetails?.zap.actions.find(x=>x.sortinOrder===stage)
+       const currentAction=zapRunDetails?.zap.actions.find(x=>x.sortingOrder===stage)
 
        if(!currentAction){
       console.log("Current action not found?");
       return;
        }
 
-       if(currentAction.id==="email"){
+       if(currentAction.type.id==="email"){
        console.log("Sending out an email");
        }
 
-       if(currentAction.id==="send-sol"){
+       if(currentAction.type.id==="send-sol"){
         console.log("Sending out solana");
        }
 
       await new Promise(r=>setTimeout(r,5000)); 
       const zapId= message.value?.toString();
       const lastStage=(zapRunDetails?.zap.actions.length||1)-1;
+      if(lastStage!==stage){
+
+   await producer.send({
+    topic:TOPIC_NAME,
+    messages: 
+         [{
+          value:JSON.stringify({
+         stage:stage+1,
+         zapRunId 
+
+         })
+   }]
+      
+     })
+
+      }
        console.log("processing done");
       await consumer.commitOffsets([{
         topic:TOPIC_NAME,

@@ -8,7 +8,7 @@ const router=Router();
 
 
 router.get("/available",async (req,res)=>{
-const availableActions= await prismaClient.availableTriggers.findMany({});
+const availableActions= await prismaClient.availableTrigger.findMany({});
 res.json({
     availableActions
 })
