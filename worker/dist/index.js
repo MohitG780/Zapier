@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = require("@prisma/client");
 const kafkajs_1 = require("kafkajs");
+const parser_1 = require("./parser");
 const TOPIC_NAME = "quickstart-events";
 const prismaClient = new client_1.PrismaClient();
 const kafka = new kafkajs_1.Kafka({
@@ -29,7 +30,7 @@ function main() {
         yield consumer.run({
             autoCommit: false,
             eachMessage: (_a) => __awaiter(this, [_a], void 0, function* ({ topic, partition, message }) {
-                var _b, _c, _d, _e;
+                var _b, _c, _d, _e, _f, _g, _h, _j;
                 console.log({
                     partition,
                     offset: message.offset,
@@ -64,14 +65,20 @@ function main() {
                     console.log("Current action not found?");
                     return;
                 }
+                console.log(currentAction);
+                const zapRunMetadata = zapRunDetails === null || zapRunDetails === void 0 ? void 0 : zapRunDetails.metadata;
                 if (currentAction.type.id === "email") {
-                    console.log("Sending out an email");
+                    const body = (0, parser_1.parse)((_e = currentAction.metadata) === null || _e === void 0 ? void 0 : _e.body, zapRunMetadata);
+                    const to = (0, parser_1.parse)((_f = currentAction.metadata) === null || _f === void 0 ? void 0 : _f.email, zapRunMetadata);
+                    console.log(`Sending out to ${to} body is ${body}`);
                 }
                 if (currentAction.type.id === "send-sol") {
-                    console.log("Sending out solana");
+                    const amount = (0, parser_1.parse)((_g = currentAction.metadata) === null || _g === void 0 ? void 0 : _g.amount, zapRunMetadata);
+                    const address = (0, parser_1.parse)((_h = currentAction.metadata) === null || _h === void 0 ? void 0 : _h.address, zapRunMetadata);
+                    console.log(`Sending out SOL of ${amount} body is ${address}`);
                 }
                 yield new Promise(r => setTimeout(r, 5000));
-                const zapId = (_e = message.value) === null || _e === void 0 ? void 0 : _e.toString();
+                const zapId = (_j = message.value) === null || _j === void 0 ? void 0 : _j.toString();
                 const lastStage = ((zapRunDetails === null || zapRunDetails === void 0 ? void 0 : zapRunDetails.zap.actions.length) || 1) - 1;
                 if (lastStage !== stage) {
                     yield producer.send({

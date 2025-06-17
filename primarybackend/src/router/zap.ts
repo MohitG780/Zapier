@@ -23,10 +23,10 @@ router.post("/",authMiddleware,async(req,res)=>{
                 userId:id,
                 triggerId:"",
                     actions:{
-                        //@ts-ignore
+                        
                     create:parsedData.data.actions.map((x,index)=>({
                   actionId:x.availableActionId,
-                  sortinOrder:index,
+                  sortingOrder:index,
                              metadata:x.actionMetadata 
                     }))
                 }
