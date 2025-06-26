@@ -42,7 +42,6 @@ Final Workflow Preview
 
 
 
-<img width="1455" alt="Screenshot 2025-06-26 at 3 50 51 PM" src="https://github.com/user-attachments/assets/9f6e7deb-7cd4-4bbb-9acd-fe6f6b755f08" />
 
 <img width="1455" alt="Screenshot 2025-06-26 at 3 50 51 PM" src="https://github.com/user-attachments/assets/ace40566-49c8-4879-8257-2caaf2af1834" />
 
