@@ -23,9 +23,35 @@ Dashboard to track created Zaps (workflows)
 
 <img width="1465" alt="Screenshot 2025-06-26 at 3 49 27 PM" src="https://github.com/user-attachments/assets/5a932cb4-9688-423e-850e-5082686a2eac" />
 
+
 🔐 Authentication
 
 <img width="1462" alt="Screenshot 2025-06-26 at 3 49 39 PM" src="https://github.com/user-attachments/assets/780836d2-7f02-4a60-a015-d00f3c6dd4b0" />
+
+
+➕ Create Zap (Step-by-step UI)
+Trigger Selection
+
+Action - Solana
+
+Final Workflow Preview
+
+<img width="1455" alt="Screenshot 2025-06-26 at 3 50 51 PM" src="https://github.com/user-attachments/assets/9f6e7deb-7cd4-4bbb-9acd-fe6f6b755f08" />
+
+<img width="1455" alt="Screenshot 2025-06-26 at 3 50 51 PM" src="https://github.com/user-attachments/assets/ace40566-49c8-4879-8257-2caaf2af1834" />
+
+<img width="1470" alt="Screenshot 2025-06-26 at 3 51 01 PM" src="https://github.com/user-attachments/assets/b2883a2f-e5fd-4d1d-a593-636d36e054f5" />
+
+
+
+📊 Zap Dashboard
+
+<img width="1470" alt="Screenshot 2025-06-26 at 3 51 22 PM" src="https://github.com/user-attachments/assets/7846cf33-2c82-4df2-89cc-b859e5fe90da" />
+
+
+
+
+
 
 
 
