@@ -23,12 +23,14 @@ Dashboard to track created Zaps (workflows)
 
 🏠 Landing Page
 
-<img width="1465" alt="Screenshot 2025-06-26 at 3 49 27 PM" src="https://github.com/user-attachments/assets/5a932cb4-9688-423e-850e-5082686a2eac" />
+<img width="1164" height="633" alt="Screenshot 2026-04-06 at 7 13 36 PM" src="https://github.com/user-attachments/assets/73938e5f-5dd0-4907-973c-874cf56250ce" />
+
 
 
 🔐 Authentication
 
-<img width="1462" alt="Screenshot 2025-06-26 at 3 49 39 PM" src="https://github.com/user-attachments/assets/780836d2-7f02-4a60-a015-d00f3c6dd4b0" />
+<img width="1196" height="657" alt="Screenshot 2026-04-06 at 7 13 48 PM" src="https://github.com/user-attachments/assets/09f663d5-d02e-42bb-9acd-f249bf87825c" />
+
 
 
 
@@ -38,20 +40,16 @@ Trigger Selection
 Action - Solana
 
 Final Workflow Preview
+<img width="1162" height="635" alt="Screenshot 2026-04-06 at 7 13 59 PM" src="https://github.com/user-attachments/assets/710d8ff9-006c-48e2-a821-7badd3f43f75" />
+<img width="1200" height="602" alt="Screenshot 2026-04-06 at 7 14 11 PM" src="https://github.com/user-attachments/assets/32c303d3-8a90-4120-abb5-635779e672be" />
 
-
-
-
-
-<img width="1455" alt="Screenshot 2025-06-26 at 3 50 51 PM" src="https://github.com/user-attachments/assets/ace40566-49c8-4879-8257-2caaf2af1834" />
-
-<img width="1470" alt="Screenshot 2025-06-26 at 3 51 01 PM" src="https://github.com/user-attachments/assets/b2883a2f-e5fd-4d1d-a593-636d36e054f5" />
 
 
 
 📊 Zap Dashboard
 
-<img width="1470" alt="Screenshot 2025-06-26 at 3 51 22 PM" src="https://github.com/user-attachments/assets/7846cf33-2c82-4df2-89cc-b859e5fe90da" />
+<img width="1194" height="604" alt="Screenshot 2026-04-06 at 7 14 21 PM" src="https://github.com/user-attachments/assets/df52637f-2696-4da6-86b1-b6e7abf288f2" />
+
 
 🧠 How It Works
 User signs in
